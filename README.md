@@ -1,2 +1,3 @@
 # hellofybsc
-FYBSc Class Details.
+I am a student.
+This is my second repository.
