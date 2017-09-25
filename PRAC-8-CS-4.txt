@@ -1,0 +1,108 @@
+PRACTICAL:8  CS-4
+
+1.
+declare
+vx number(10);
+vy number(10);
+va number(10);
+vb number(10);
+begin
+vx:=:vx;
+vy:=:vy;
+va:=vx+vy;
+vb:=vx/vy;
+dbms_output.put_line(va);
+dbms_output.put_line(vb);
+exception
+when zero_divide then
+dbms_output.put_line('Division by zero not possible!');
+end;
+
+
+2.
+declare
+vempid number(10);
+vjob varchar2(10);
+o exception;
+begin
+vempid:=:ID;
+select job into vjob from emp1 where empid=vempid;
+if vjob='clerk' then
+update emp1 set salary=salary+200 where empid=vempid;
+elsif vjob='manager' then
+update emp1 set salary=salary+1000 where empid=vempid;
+elsif vjob='President' then
+update emp1 set salary=salary+1500 where empid=vempid;
+else
+raise o;
+end if;
+exception 
+when o then
+dbms_output.put_line('Select valid jobs!');
+end;
+
+
+3.
+create table Enrolment (studentid number(10), stu_name varchar2(10), coursid number(10), coursename varchar2(10));
+
+insert into Enrolment values(1,'a',101,'bsc');
+insert into Enrolment values(2,'b',202,'bca');
+insert into Enrolment values(3,'c',303,'bcom');
+insert into Enrolment values(4,'d',404,'bsc');
+insert into Enrolment values(4,'e',505,'bsc');
+
+
+declare
+vid number(10);
+vname varchar2(10);
+begin
+vid:=:ID;
+select stu_name into vname from Enrolment where studentid=vid;
+exception
+when no_data_found then
+dbms_output.put_line('Not enrolled!');
+when too_many_rows then
+dbms_output.put_line('Enrolled more than once');
+end;
+
+
+4.
+Create table employee_tbl( emp_id varchar2(10), emp_name varchar2(10), emp_salary number(10), degree varchar2(10) , workexperience number(10));
+
+insert into employee_tbl values('e1','a',100000,'mca',10);
+insert into employee_tbl values('e2','b',200000,'bca',11);
+insert into employee_tbl values('e3','c',300000,'mba',12);
+insert into employee_tbl values('e4','d',400000,'bsc',13);
+insert into employee_tbl values('e5','d',500000,'msc',14);
+insert into employee_tbl values('e6','e',600000,'phd',14);
+insert into employee_tbl values('e7','f',700000,'phd',6);
+insert into employee_tbl values('e8','g',800000,'phd',4);
+
+declare
+vemp_id varchar2(10);
+vdegree varchar2(10);
+vexp varchar2(10);
+begin
+vemp_id:=:ID;
+select degree,workexperience into vdegree,vexp from employee_tbl where emp_id=vemp_id;
+if ((vdegree='phd') and (vexp>10)) then
+update employee_tbl
+set emp_salary=emp_salary+8000 where emp_id=vemp_id;
+elsif((vdegree='phd') and (vexp>=5 and vexp<=7)) then
+update employee_tbl
+set emp_salary=emp_salary+6000 where emp_id=vemp_id;
+elsif((vdegree='phd') and (vexp<5)) then
+update employee_tbl
+set emp_salary=emp_salary+3000 where emp_id=vemp_id;
+end if;
+exception
+when no_data_found then
+dbms_output.put_line('No data found!');
+end;
+
+
+5.
+
+
+
+
